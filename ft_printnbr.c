@@ -6,13 +6,13 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 13:05:37 by tbourdea          #+#    #+#             */
-/*   Updated: 2022/12/02 16:51:21 by tbourdea         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:01:03 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(char	*str)
 {
 	int	i;
 
@@ -22,65 +22,45 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_mallocsize(long n, int base)
+int	ft_printnbr_base(int nbr, char *base)
 {
-	int	size;
-
-	size = 1;
-	if (n < 0)
-	{
-		n = -n;
-		size++;
-	}
-	while (n >= base)
-	{
-		size++;
-		n = n / base;
-	}
-	return (size);
-}
-
-char	*ft_strrev(char *dest, int len)
-{
-	int		i;
-	char	tmp;
-
-	i = 0;
-	while (i < len - i)
-	{
-		tmp = dest[i];
-		dest[i] = dest[len - i];
-		dest[len - i] = tmp;
-		i++;
-	}
-	return (dest);
-}
-
-char	*ft_itoa_base(int n, char *b)
-{
+	int		b;
+	int		len;
 	long	nb;
-	char	*dest;
-	int		i;
-	int		base;
 
-	base = ft_strlen(b);
-	nb = n;
-	i = 1;
-	dest = malloc(sizeof(char) * (ft_mallocsize(nb, base) + 1));
-	if (!dest)
-		return (NULL);
-	dest[0] = '\0';
-	if (n < 0)
-		nb = -nb;
-	while (nb >= base)
+	len = 0;
+	nb = nbr;
+	b = ft_strlen(base);
+	
+	if (nb < 0)
 	{
-		dest[i] = b[nb % base];
-		nb = nb / base;
-		i++;
+		nb = -nb;
+		len += ft_printchar('-');
 	}
-	dest[i] = b[nb];
-	if (n < 0)
-		dest[i + 1] = '-';
-	return (ft_strrev(dest, ft_mallocsize(n, base)));
+	if (nb >= b)
+	{
+		len += ft_printnbr_base(nb / b, base);
+		len += ft_printnbr_base(nb % b, base);
+	}
+	else
+		len += ft_printchar(base[nb]);
+	return (len);
 }
 
+int	ft_printunbr_base(unsigned int nb, char *base)
+{
+	unsigned int	b;
+	int		len;
+
+	len = 0;
+	b = ft_strlen(base);
+
+	if (nb >= b)
+	{
+		len += ft_printnbr_base(nb / b, base);
+		len += ft_printnbr_base(nb % b, base);
+	}
+	else
+		len += ft_printchar(base[nb]);
+	return (len);
+}

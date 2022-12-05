@@ -6,7 +6,7 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:33:27 by tbourdea          #+#    #+#             */
-/*   Updated: 2022/12/02 17:02:58 by tbourdea         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:03:18 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,24 @@
 int	ft_select(va_list params, char c)
 {
 	int		len;
-	char	*str;
 
 	len = 0;
 	if (c == 'c')
-		len += ft_printchar((char) va_arg(params, int));
+		len += ft_printchar(va_arg(params, int));
 	else if (c == 's')
-		len += ft_printstr((const char *) va_arg(params, const char *));
+		len += ft_printstr(va_arg(params, const char *));
+	else if (c == 'p')
+		len += ft_printptr(va_arg(params, long unsigned int));
 	else if (c == 'd' || c == 'i')
-		str = ft_itoa_base((int) va_arg(params, int), "0123456789");
+		len += ft_printnbr_base(va_arg(params, int), "0123456789");
+	else if (c== 'u')
+		len += ft_printunbr_base(va_arg(params, unsigned int), "0123456789");
 	else if (c == 'x')
-		str = ft_itoa_base((int) va_arg(params, int), "0123456789abcdef");
+		len += ft_printnbr_base(va_arg(params, int), "0123456789abcdef");
 	else if (c == 'X')
-		str = ft_itoa_base((int) va_arg(params, int), "0123456789ABCDEF");
+		len += ft_printnbr_base(va_arg(params, int), "0123456789ABCDEF");
 	else if (c == '%')
 		len += ft_printchar('%');
-	if (str)
-	{
-		len += ft_printstr(str);
-		free(str);
-	}
 	return (len);
 }
 
@@ -70,12 +68,13 @@ int	main(int ac, char **av)
 	int	len;
 	int	tlen;
 	(void) ac;
+
 	// len = ft_printf("Coucou\n");
 	// ft_printf("Coucou %s\n", "len");
 	// ft_printf("Coucou %c\n", 'l');
-	len = ft_printf("%i", atoi(av[1]));
-	ft_printf("\n%d\n", len);
-	tlen = printf("%i", atoi(av[1]));
-	printf("\n%d\n", tlen);
+	len = printf("%u", atoi(av[1]));
+	printf("\n%d\n", len);
+	tlen = ft_printf("%u", atoi(av[1]));
+	ft_printf("\n%d\n", tlen);
 	return (0);
 }

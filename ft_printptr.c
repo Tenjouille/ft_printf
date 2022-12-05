@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printletters.c                                  :+:      :+:    :+:   */
+/*   ft_printptr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 11:20:53 by tbourdea          #+#    #+#             */
-/*   Updated: 2022/12/05 15:00:16 by tbourdea         ###   ########.fr       */
+/*   Created: 2022/12/05 14:04:43 by tbourdea          #+#    #+#             */
+/*   Updated: 2022/12/05 16:26:24 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printchar(char c)
+int	ft_printptr(long unsigned int nb)
 {
-	int	len;
-
-	len = 1;
-	write(1, &c, 1);
-	return (len);
-}
-
-int	ft_printstr(const char *str)
-{
-	int	len;
+	int		len;
 
 	len = 0;
-	if (!str)
+	if (nb == 0)
+		len += ft_printstr("(nil)");
+	else
 	{
-		len += ft_printstr("(null)");
-		return (len);
+		len += ft_printstr("0x");
+		len += ft_printnbr_base(nb, "0123456789abcdef");
 	}
-	while (str[len])
-		len += ft_printchar(str[len]);
 	return (len);
 }
