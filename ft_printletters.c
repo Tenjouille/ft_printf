@@ -6,24 +6,24 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 11:20:53 by tbourdea          #+#    #+#             */
-/*   Updated: 2022/12/05 15:00:16 by tbourdea         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:56:43 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printchar(char c)
+unsigned int	ft_printchar(char c)
 {
-	int	len;
+	unsigned int	len;
 
 	len = 1;
 	write(1, &c, 1);
 	return (len);
 }
 
-int	ft_printstr(const char *str)
+unsigned int	ft_printstr(const char *str)
 {
-	int	len;
+	unsigned int	len;
 
 	len = 0;
 	if (!str)
